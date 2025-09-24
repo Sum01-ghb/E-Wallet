@@ -1,7 +1,6 @@
 import { useCallback, useState } from "react";
 import { Alert } from "react-native";
-
-const API_URL = "https://e-wallet-server-dxz8.onrender.com/api";
+import { API_URL } from "../constants/api.js";
 
 export const useTransactions = (userId) => {
   const [transactions, setTransactions] = useState([]);
