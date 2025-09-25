@@ -1,12 +1,13 @@
 import { useClerk } from "@clerk/clerk-expo";
 import { Alert, TouchableOpacity } from "react-native";
-import { styles } from "../assets/styles/home.styles.js";
+import { createStyles } from "../assets/styles/home.styles.js";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS } from "../constants/colors.js";
+import { useTheme } from "../contexts/ThemeContext";
 
 export const SignOutButton = () => {
-  // Use `useClerk()` to access the `signOut()` function
   const { signOut } = useClerk();
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const handleSignOut = async () => {
     Alert.alert("Logout", "Are you sure you want to logout?", [
       { text: "Cancel", style: "cancel" },
@@ -15,7 +16,7 @@ export const SignOutButton = () => {
   };
   return (
     <TouchableOpacity style={styles.logoutButton} onPress={handleSignOut}>
-      <Ionicons name="log-out-outline" size={22} color={COLORS.text} />
+      <Ionicons name="log-out-outline" size={22} color={colors.text} />
     </TouchableOpacity>
   );
 };

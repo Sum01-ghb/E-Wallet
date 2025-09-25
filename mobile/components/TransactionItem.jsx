@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { styles } from "../assets/styles/home.styles.js";
-import { COLORS } from "../constants/colors.js";
+import { createStyles } from "../assets/styles/home.styles.js";
+import { useTheme } from "../contexts/ThemeContext";
 import { formatDate } from "@/lib/utils.js";
 
 const CATEGORY_ICONS = {
@@ -15,6 +15,8 @@ const CATEGORY_ICONS = {
 };
 
 export const TransactionItem = ({ item, onDelete }) => {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const isIncome = parseFloat(item.amount) > 0;
   const iconName = CATEGORY_ICONS[item.category] || "pricetag-outline";
 
@@ -25,7 +27,7 @@ export const TransactionItem = ({ item, onDelete }) => {
           <Ionicons
             name={iconName}
             size={22}
-            color={isIncome ? COLORS.income : COLORS.expense}
+            color={isIncome ? colors.income : colors.expense}
           />
         </View>
         <View style={styles.transactionLeft}>
@@ -36,7 +38,7 @@ export const TransactionItem = ({ item, onDelete }) => {
           <Text
             style={[
               styles.transactionAmount,
-              { color: isIncome ? COLORS.income : COLORS.expense },
+              { color: isIncome ? colors.income : colors.expense },
             ]}
           >
             {isIncome ? "+" : "-"}$
@@ -52,7 +54,7 @@ export const TransactionItem = ({ item, onDelete }) => {
         style={styles.deleteButton}
         onPress={() => onDelete(item.id)}
       >
-        <Ionicons name="trash-outline" size={20} color={COLORS.expense} />
+        <Ionicons name="trash-outline" size={20} color={colors.expense} />
       </TouchableOpacity>
     </View>
   );

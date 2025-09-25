@@ -13,16 +13,20 @@ import { SignOutButton } from "@/components/SignOutButton";
 import { useTransactions } from "../../hooks/useTransactions.js";
 import { useEffect, useState } from "react";
 import PageLoader from "../../components/PageLoader.jsx";
-import { styles } from "../../assets/styles/home.styles.js";
+import { createStyles } from "../../assets/styles/home.styles.js";
+import { useTheme } from "../../contexts/ThemeContext";
 import { Ionicons } from "@expo/vector-icons";
 import BalanceCard from "../../components/BalanceCard.jsx";
 import TransactionItem from "../../components/TransactionItem.jsx";
 import NoTransactionsFound from "../../components/NoTransactionsFound.jsx";
+import ThemeSelector from "../../components/ThemeSelector.jsx";
 
 export default function Page() {
   const { user } = useUser();
   const router = useRouter();
   const [refreshing, setRefreshing] = useState(false);
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
 
   const { transactions, summary, isLoading, loadData, deleteTransaction } =
     useTransactions(user.id);
@@ -85,6 +89,7 @@ export default function Page() {
               <Ionicons name="add" size={20} color="#FFF" />
               <Text style={styles.addButtonText}>Add</Text>
             </TouchableOpacity>
+            <ThemeSelector />
             <SignOutButton />
           </View>
         </View>
