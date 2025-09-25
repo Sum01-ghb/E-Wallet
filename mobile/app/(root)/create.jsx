@@ -10,9 +10,9 @@ import { useRouter } from "expo-router";
 import { useUser } from "@clerk/clerk-expo";
 import { useState } from "react";
 import { API_URL } from "../../constants/api.js";
-import { styles } from "../../assets/styles/create.styles.js";
+import { createStyles } from "../../assets/styles/create.styles.js";
 import { Ionicons } from "@expo/vector-icons";
-import { COLORS } from "../../constants/colors.js";
+import { useTheme } from "../../contexts/ThemeContext";
 
 const CATEGORIES = [
   { id: "food", name: "Food & Drinks", icon: "fast-food" },
@@ -27,6 +27,8 @@ const CATEGORIES = [
 const CreateScreen = () => {
   const router = useRouter();
   const { user } = useUser();
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
 
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
@@ -82,7 +84,7 @@ const CreateScreen = () => {
           style={styles.backButton}
           onPress={() => router.back()}
         >
-          <Ionicons name="arrow-back" size={24} color={COLORS.text} />
+          <Ionicons name="arrow-back" size={24} color={colors.text} />
         </TouchableOpacity>
         <Text style={styles.headerTitle}>New Transaction</Text>
         <TouchableOpacity
@@ -97,7 +99,7 @@ const CreateScreen = () => {
             {isLoading ? "Saving..." : "Save"}
           </Text>
           {!isLoading && (
-            <Ionicons name="checkmark" size={18} color={COLORS.primary} />
+            <Ionicons name="checkmark" size={18} color={colors.primary} />
           )}
         </TouchableOpacity>
       </View>
@@ -112,7 +114,7 @@ const CreateScreen = () => {
             <Ionicons
               name="arrow-down-circle"
               size={22}
-              color={isExpense ? COLORS.white : COLORS.expense}
+              color={isExpense ? colors.white : colors.expense}
               style={styles.typeIcon}
             />
             <Text
@@ -133,7 +135,7 @@ const CreateScreen = () => {
             <Ionicons
               name="arrow-up-circle"
               size={22}
-              color={!isExpense ? COLORS.white : COLORS.income}
+              color={!isExpense ? colors.white : colors.income}
               style={styles.typeIcon}
             />
             <Text
@@ -153,7 +155,7 @@ const CreateScreen = () => {
           <TextInput
             style={styles.amountInput}
             placeholder="0.00"
-            placeholderTextColor={COLORS.textLight}
+            placeholderTextColor={colors.textLight}
             value={amount}
             onChangeText={setAmount}
             keyboardType="numeric"
@@ -165,13 +167,13 @@ const CreateScreen = () => {
           <Ionicons
             name="create-outline"
             size={22}
-            color={COLORS.textLight}
+            color={colors.textLight}
             style={styles.inputIcon}
           />
           <TextInput
             style={styles.input}
             placeholder="Transaction Title"
-            placeholderTextColor={COLORS.textLight}
+            placeholderTextColor={colors.textLight}
             value={title}
             onChangeText={setTitle}
           />
@@ -179,7 +181,7 @@ const CreateScreen = () => {
 
         {/* Title */}
         <Text style={styles.sectionTitle}>
-          <Ionicons name="pricetag-outline" size={16} color={COLORS.text} />{" "}
+          <Ionicons name="pricetag-outline" size={16} color={colors.text} />{" "}
           Category
         </Text>
 
@@ -199,8 +201,8 @@ const CreateScreen = () => {
                 size={20}
                 color={
                   selectedCategory === category.name
-                    ? COLORS.white
-                    : COLORS.text
+                    ? colors.white
+                    : colors.text
                 }
                 style={styles.categoryIcon}
               />
@@ -220,7 +222,7 @@ const CreateScreen = () => {
 
       {isLoading && (
         <View style={styles.loadingContainer}>
-          <ActivityIndicator size="large" color={COLORS.primary} />
+          <ActivityIndicator size="large" color={colors.primary} />
         </View>
       )}
     </View>

@@ -1,8 +1,11 @@
 import { View, Text } from "react-native";
-import { styles } from "../assets/styles/home.styles.js";
-import { COLORS } from "../constants/colors.js";
+import { createStyles } from "../assets/styles/home.styles.js";
+import { useTheme } from "../contexts/ThemeContext";
 
 export const BalanceCard = ({ summary }) => {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+
   return (
     <View style={styles.balanceCard}>
       <Text style={styles.balanceTitle}>Total Balance</Text>
@@ -12,7 +15,7 @@ export const BalanceCard = ({ summary }) => {
       <View style={styles.balanceStats}>
         <View style={styles.balanceStatItem}>
           <Text style={styles.balanceStatLabel}>Income</Text>
-          <Text style={[styles.balanceStatAmount, { color: COLORS.income }]}>
+          <Text style={[styles.balanceStatAmount, { color: colors.income }]}>
             +${parseFloat(summary.income).toFixed(2)}
           </Text>
         </View>
@@ -20,7 +23,7 @@ export const BalanceCard = ({ summary }) => {
         <View style={[styles.balanceStatItem, styles.statDivider]} />
         <View style={styles.balanceStatItem}>
           <Text style={styles.balanceStatLabel}>Expenses</Text>
-          <Text style={[styles.balanceStatAmount, { color: COLORS.expense }]}>
+          <Text style={[styles.balanceStatAmount, { color: colors.expense }]}>
             -${Math.abs(parseFloat(summary.expenses)).toFixed(2)}
           </Text>
         </View>
